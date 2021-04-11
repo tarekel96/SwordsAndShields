@@ -14,6 +14,10 @@ public class TileManager : MonoBehaviour
     public Text TextScoreSword;
     public Text TextScoreShield;
 
+    public Button ResetButton;
+    public Button QuitButton;
+    private bool ShowButtons = false;
+
     public enum Owner
     {
         None,
@@ -26,15 +30,20 @@ public class TileManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // hide buttons on start
+        ResetButton.GetComponent<CanvasGroup>().alpha = 0;
+        QuitButton.GetComponent<CanvasGroup>().alpha = 0;
+        // assign score to score text
         TextScoreShield.text = Score_Shield.ToString();
         TextScoreSword.text = Score_Sword.ToString();
+        // init won to false and player to sword
         won = false;
         CurrentPlayer = Owner.Sword;
     }
 
-    public IEnumerator resetTiles()
+    // resets the tiles of the tiles array
+    public void resetTiles()
     {
-        yield return new WaitForSeconds(1);
         for (int i = 0; i < Tiles.Length; ++i)
         {
             Tiles[i].ResetTile();
@@ -79,9 +88,18 @@ public class TileManager : MonoBehaviour
         else if (Tiles[2].owner == CurrentPlayer && Tiles[4].owner == CurrentPlayer && Tiles[6].owner == CurrentPlayer)
             won = true;
 
+        // logic after a player wins
         if (won)
         {
+            // buttons are to be shown
+            ShowButtons = true;
+            if (ShowButtons)
+            {
+                ResetButton.GetComponent<CanvasGroup>().alpha = 1;
+                QuitButton.GetComponent<CanvasGroup>().alpha = 1;
+            }
             Debug.Log("Winner: " + CurrentPlayer);
+            // increment appropriate score counter
             if(CurrentPlayer == Owner.Sword)
             {
                 Score_Sword++;
@@ -92,8 +110,14 @@ public class TileManager : MonoBehaviour
                 Score_Shield++;
                 TextScoreShield.text = Score_Shield.ToString();
             }
-            StartCoroutine(resetTiles());
-            won = false;
+            Button resetButton = ResetButton.GetComponent<UnityEngine.UI.Button>();
+            resetButton.onClick.AddListener(() => {
+                resetTiles();
+                won = false;
+            });
+            //// reset the tiles
+            //StartCoroutine(resetTiles());
+            //won = false;
             return true;
         }
 

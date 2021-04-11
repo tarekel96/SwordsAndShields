@@ -15,7 +15,6 @@ public class Tile : MonoBehaviour
     public void ResetTile()
     {
         this.GetComponent<SpriteRenderer>().sprite = OG_Sprite;
-        //this.GetComponent<SpriteRenderer>().color = Color.white;
         owner = TileManager.Owner.None;
     }
 
@@ -33,12 +32,10 @@ public class Tile : MonoBehaviour
         if (owner == TileManager.Owner.Sword)
         {
             this.GetComponent<SpriteRenderer>().sprite = Sprite_Sword;
-            //this.GetComponent<SpriteRenderer>().transform.localScale = new Vector3(3, 2, 1);
         }
         else if (owner == TileManager.Owner.Shield)
         {
             this.GetComponent<SpriteRenderer>().sprite = Shield_Sprite;
-            //this.GetComponent<SpriteRenderer>().transform.localScale = new Vector3(3, 2, 1);
         }
             // Update to the next player in rotation
         tileManager.ChangePlayer();
