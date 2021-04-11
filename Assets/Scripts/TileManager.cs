@@ -110,14 +110,19 @@ public class TileManager : MonoBehaviour
                 Score_Shield++;
                 TextScoreShield.text = Score_Shield.ToString();
             }
+            // reset button OnClick event listener
             Button resetButton = ResetButton.GetComponent<UnityEngine.UI.Button>();
             resetButton.onClick.AddListener(() => {
-                resetTiles();
-                won = false;
+                resetTiles(); // reset tiles
+                won = false; // win = false bc new game will start
             });
-            //// reset the tiles
-            //StartCoroutine(resetTiles());
-            //won = false;
+            // quit button OnClick event listener
+            Button quitButton = QuitButton.GetComponent<UnityEngine.UI.Button>();
+            resetButton.onClick.AddListener(() => {
+                Debug.Log("Application has been quit from the user (in-game).");
+                Application.Quit();
+            });
+
             return true;
         }
 
