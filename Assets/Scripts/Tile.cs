@@ -1,16 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Tile : MonoBehaviour
 {
     public TileManager tileManager;
     public TileManager.Owner owner;
+    public Sprite Sprite_Square;
+    public Sprite Shield_Sprite;
+    public Sprite Sprite_Sword;
+    public Sprite OG_Sprite;
 
     public void ResetTile()
     {
-        this.GetComponent<SpriteRenderer>().color = Color.white;
+        this.GetComponent<SpriteRenderer>().sprite = OG_Sprite;
+        //this.GetComponent<SpriteRenderer>().color = Color.white;
         owner = TileManager.Owner.None;
+    }
+
+    void Start()
+    {
+        OG_Sprite = this.GetComponent<SpriteRenderer>().sprite;
     }
 
     private void OnMouseUp()
@@ -20,11 +31,16 @@ public class Tile : MonoBehaviour
 
         // Set the sprite color to represent the owner (Sword = Blue, Shield = Red)
         if (owner == TileManager.Owner.Sword)
-            this.GetComponent<SpriteRenderer>().color = Color.blue;
+        {
+            this.GetComponent<SpriteRenderer>().sprite = Sprite_Sword;
+            //this.GetComponent<SpriteRenderer>().transform.localScale = new Vector3(3, 2, 1);
+        }
         else if (owner == TileManager.Owner.Shield)
-            this.GetComponent<SpriteRenderer>().color = Color.red;
-
-        // Update to the next player in rotation
+        {
+            this.GetComponent<SpriteRenderer>().sprite = Shield_Sprite;
+            //this.GetComponent<SpriteRenderer>().transform.localScale = new Vector3(3, 2, 1);
+        }
+            // Update to the next player in rotation
         tileManager.ChangePlayer();
     }
 }

@@ -96,6 +96,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abc6a41bbb5b64cf9b046b4fe6065fcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tileManager: {fileID: 0}
+  owner: 0
+  Sprite_Square: {fileID: 21300000, guid: b5b954b7c98c44812b533a085d49c70e, type: 3}
+  Shield_Sprite: {fileID: -1364871528128612938, guid: 45dab8cd356544fe69d8fdd93058c55c, type: 3}
+  Sprite_Sword: {fileID: 6415248453620612171, guid: 45dab8cd356544fe69d8fdd93058c55c, type: 3}
 --- !u!61 &5356609617117488856
 BoxCollider2D:
   m_ObjectHideFlags: 0
