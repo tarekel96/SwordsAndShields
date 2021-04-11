@@ -5,7 +5,7 @@ using UnityEngine;
 public class TileManager : MonoBehaviour
 {
     public Owner CurrentPlayer;
-    public Tile[] Tiles = new Tile[4];
+    public Tile[] Tiles = new Tile[9];
 
     public enum Owner
     {
@@ -23,6 +23,15 @@ public class TileManager : MonoBehaviour
         CurrentPlayer = Owner.Sword;
     }
 
+    public IEnumerator resetTiles()
+    {
+        yield return new WaitForSeconds(1);
+        for (int i = 0; i < Tiles.Length; ++i)
+        {
+            Tiles[i].ResetTile();
+        }
+    }
+
     public void ChangePlayer()
     {
         if (CheckForWinner())
@@ -36,20 +45,36 @@ public class TileManager : MonoBehaviour
 
     public bool CheckForWinner()
     {
-        if (Tiles[0].owner == CurrentPlayer && Tiles[1].owner == CurrentPlayer)
+        // first row win
+        if (Tiles[0].owner == CurrentPlayer && Tiles[1].owner == CurrentPlayer && Tiles[2].owner == CurrentPlayer)
             won = true;
-        else if (Tiles[0].owner == CurrentPlayer && Tiles[2].owner == CurrentPlayer)
+        // second row win
+        else if (Tiles[3].owner == CurrentPlayer && Tiles[4].owner == CurrentPlayer && Tiles[5].owner == CurrentPlayer)
             won = true;
-        else if (Tiles[0].owner == CurrentPlayer && Tiles[3].owner == CurrentPlayer)
+        // last row in
+        else if (Tiles[6].owner == CurrentPlayer && Tiles[7].owner == CurrentPlayer && Tiles[8].owner == CurrentPlayer)
             won = true;
-        else if (Tiles[1].owner == CurrentPlayer && Tiles[2].owner == CurrentPlayer)
+        // first col win
+        else if (Tiles[0].owner == CurrentPlayer && Tiles[3].owner == CurrentPlayer && Tiles[6].owner == CurrentPlayer)
             won = true;
-        else if (Tiles[1].owner == CurrentPlayer && Tiles[3].owner == CurrentPlayer)
+        // second col win
+        else if (Tiles[1].owner == CurrentPlayer && Tiles[4].owner == CurrentPlayer && Tiles[7].owner == CurrentPlayer)
+            won = true;
+        // last col win
+        else if (Tiles[2].owner == CurrentPlayer && Tiles[5].owner == CurrentPlayer && Tiles[8].owner == CurrentPlayer)
+            won = true;
+        // top left -> bottom right win
+        else if (Tiles[0].owner == CurrentPlayer && Tiles[4].owner == CurrentPlayer && Tiles[8].owner == CurrentPlayer)
+            won = true;
+        // top right -> bottom left win
+        else if (Tiles[2].owner == CurrentPlayer && Tiles[4].owner == CurrentPlayer && Tiles[6].owner == CurrentPlayer)
             won = true;
 
         if (won)
         {
             Debug.Log("Winner: " + CurrentPlayer);
+            StartCoroutine(resetTiles());
+            won = false;
             return true;
         }
 

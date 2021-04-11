@@ -7,6 +7,12 @@ public class Tile : MonoBehaviour
     public TileManager tileManager;
     public TileManager.Owner owner;
 
+    public void ResetTile()
+    {
+        this.GetComponent<SpriteRenderer>().color = Color.white;
+        owner = TileManager.Owner.None;
+    }
+
     private void OnMouseUp()
     {
         // Check for current player that is claiming ownership of this space
