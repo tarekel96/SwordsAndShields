@@ -1,11 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TileManager : MonoBehaviour
 {
     public Owner CurrentPlayer;
     public Tile[] Tiles = new Tile[9];
+
+    private int Score_Sword = 0;
+    private int Score_Shield = 0;
+
+    public Text TextScoreSword;
+    public Text TextScoreShield;
 
     public enum Owner
     {
@@ -19,6 +26,8 @@ public class TileManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        TextScoreShield.text = Score_Shield.ToString();
+        TextScoreSword.text = Score_Sword.ToString();
         won = false;
         CurrentPlayer = Owner.Sword;
     }
@@ -73,6 +82,16 @@ public class TileManager : MonoBehaviour
         if (won)
         {
             Debug.Log("Winner: " + CurrentPlayer);
+            if(CurrentPlayer == Owner.Sword)
+            {
+                Score_Sword++;
+                TextScoreSword.text = Score_Sword.ToString();
+            }
+            else if(CurrentPlayer == Owner.Shield)
+            {
+                Score_Shield++;
+                TextScoreShield.text = Score_Shield.ToString();
+            }
             StartCoroutine(resetTiles());
             won = false;
             return true;
